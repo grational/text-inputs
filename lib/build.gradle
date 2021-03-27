@@ -63,7 +63,10 @@ dependencies {
 
 
 	// We use the awesome Spock testing and specification framework
-	testImplementation "org.spockframework:spock-core:$spockVersion"
+	testImplementation (
+		"org.spockframework:spock-core:$spockVersion",
+		'com.github.tomakehurst:wiremock:2.27.2'
+	)
 }
 
 // codenarc groovy source analyses
