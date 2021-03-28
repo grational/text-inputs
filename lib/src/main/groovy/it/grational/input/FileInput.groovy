@@ -8,12 +8,12 @@ class FileInput implements TextInput {
 
 	@Override
 	Boolean available() {
-		this.input.canRead()
+		this.input?.canRead() ?: false
 	}
 
 	@Override
 	String getText() {
-		this.input.getText()
+		this.input?.getText() ?: ''
 	}
 
 }

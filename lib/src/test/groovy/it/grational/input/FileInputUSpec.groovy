@@ -4,6 +4,16 @@ import spock.lang.*
 
 class FileInputUSpec extends Specification {
 	
+	def "Should be lenient if a null file is passed"() {
+		given:
+			def nullFile = null
+		and:
+			def lenientFileInput = new FileInput(nullFile)
+		expect:
+			lenientFileInput.available() == false
+			lenientFileInput.getText() == ''
+	}
+
 	@Unroll
 	def "Should signal readability of a file through the available method"() {
 		when:
