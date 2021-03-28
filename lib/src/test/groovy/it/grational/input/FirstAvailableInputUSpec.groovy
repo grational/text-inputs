@@ -4,35 +4,42 @@ import spock.lang.*
 
 class FirstAvailableInputUSpec extends Specification {
 
+	@Unroll
 	def "Should return the first available among the inputs passed"() {
 		given:
-			def first  = Mock(TextInput)
-			first.available() >> firstAvailable
+			def first  = Mock(TextInput) {
+				available() >> firstAvailable
+			}
 		and:
-			def second = Mock(TextInput)
-			second.available() >> secondAvailable
+			def second = Mock(TextInput) {
+				available() >> secondAvailable
+			}
 		when:
-			new FirstAvailableInput (
+			def output = new FirstAvailableInput (
 				first,
 				second
 			).text
 		then:
-			expectedFirst  * first.getText()
-			expectedSecond * second.getText()
+			expectedFirst  * first.getText() >> 'first text'
+			expectedSecond * second.getText() >> 'second text'
+		and:
+			output == expectedOutput
 		where:
-			firstAvailable | secondAvailable || expectedFirst | expectedSecond
-			true           | false           || 1             | 0
-			false          | true            || 0             | 1
-			true           | true            || 1             | 0
+			firstAvailable | secondAvailable || expectedFirst | expectedSecond | expectedOutput
+			true           | false           || 1             | 0              | 'first text'
+			false          | true            || 0             | 1              | 'second text'
+			true           | true            || 1             | 0              | 'first text'
 	}
 
 	def "Should raise an exception if no input is available"() {
 		given:
-			def first = Stub(TextInput)
-			first.available() >> false
+			def first = Stub(TextInput) {
+				available() >> false
+			}
 		and:
-			def second = Stub(TextInput)
-			second.available() >> false
+			def second = Stub(TextInput) {
+				available() >> false
+			}
 		when:
 			new FirstAvailableInput (
 				first,

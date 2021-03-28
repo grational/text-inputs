@@ -29,7 +29,7 @@ plugins {
 project.ext {
 	groovyVersion   = '3.0.7'
 	gradleVersion   = '6.8.3'
-	spockVersion    = '2.0-M4-groovy-3.0'
+	spockVersion    = '2.0-M5-groovy-3.0'
 	codenarcVersion = '2.0.0'
 	slf4jVersion    = '1.7.30'
 

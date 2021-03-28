@@ -14,7 +14,7 @@ class FirstAvailableInput implements TextInput {
 
 	@Override
 	String getText() {
-		this.firstAvailable().text
+		this.firstAvailable().getText()
 	}
 
 	private TextInput firstAvailable() {
