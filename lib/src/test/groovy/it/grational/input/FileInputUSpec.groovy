@@ -1,8 +1,12 @@
 package it.grational.input
 
 import spock.lang.*
+import it.grational.specification.*
 
 class FileInputUSpec extends Specification {
+
+	@Shared
+	TempFileFactory tff = new TempFileFactory()
 	
 	def "Should be lenient if a null file is passed"() {
 		given:
@@ -29,10 +33,7 @@ class FileInputUSpec extends Specification {
 	}
 
 	private File temporaryFile() {
-		File.createTempFile("temp",".tmp").tap {
-			deleteOnExit()
-			write "temporary content"
-		}
+		tff.create('non important content')
 	}
 
 	private File nonExistingFile() {
