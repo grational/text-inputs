@@ -100,7 +100,8 @@ class UrlInputUSpec extends Specification {
 			)
 	}
 
-	def "Should correctly set custom headers"() {
+	@IgnoreRest
+	def "Should correctly set custom headers both for availability and text"() {
 		given:
 			def token = 'this_is_a_secret_token'
 		and:
@@ -115,10 +116,33 @@ class UrlInputUSpec extends Specification {
 				)
 			)
 		and:
+			wms.stubFor (
+				head(urlPathEqualTo(inputPath))
+				.withHeader("token", equalTo(token))
+				.willReturn (
+					aResponse()
+					.withStatus(200)
+				)
+			)
+		and:
 			def urlInput = new UrlInput (
 				"${origin}${inputPath}".toURL(),
 				[:],
 				[ token: token ]
+			)
+
+		when:
+			def availability = urlInput.available()
+
+		then:
+			availability == true
+		and:
+			wms.verify (
+				1,
+				headRequestedFor (
+					urlPathEqualTo(inputPath)
+				)
+				.withHeader("token", equalTo(token))
 			)
 
 		when:
@@ -132,6 +156,7 @@ class UrlInputUSpec extends Specification {
 				)
 				.withHeader("token", equalTo(token))
 			)
+
 	}
 
 }

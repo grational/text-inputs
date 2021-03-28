@@ -59,6 +59,9 @@ class UrlInput implements TextInput {
 		try {
 			def code = this.url.openConnection().with {
 				requestMethod = 'HEAD'
+				this.connectionParameters.requestProperties.each { k, v ->
+					addRequestProperty(k,v)
+				}
 				connect()
 				responseCode
 			}
