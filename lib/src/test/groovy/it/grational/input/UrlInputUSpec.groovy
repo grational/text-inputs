@@ -100,7 +100,6 @@ class UrlInputUSpec extends Specification {
 			)
 	}
 
-	@IgnoreRest
 	def "Should correctly set custom headers both for availability and text"() {
 		given:
 			def token = 'this_is_a_secret_token'
